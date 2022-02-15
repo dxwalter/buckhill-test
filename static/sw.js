@@ -2,14 +2,12 @@
 
 // https://github.com/NekR/self-destroying-sw
 
-// remove e from the callback function
-self.addEventListener('install', function () {
-  self.skipWaiting()
+self.addEventListener('install', function (e) {
+  self.skipWaiting(e)
 })
 
-// remove e from the callback function
-self.addEventListener('activate', function () {
-  self.registration.unregister()
+self.addEventListener('activate', function (e) {
+  self.registration.unregister(e)
     .then(function () {
       return self.clients.matchAll()
     })
