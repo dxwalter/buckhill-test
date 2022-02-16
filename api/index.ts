@@ -52,7 +52,7 @@ class Api {
         contentType
       )
 
-      if (res.data.status === 'success') {
+      if (res.data.success === 1) {
         return res.data
       }
       return Promise.reject(res.data)
@@ -90,7 +90,7 @@ class Api {
    * Authentication
    * */
   register(data: any) {
-    return this.__request('post', '/auth/register', data)
+    return this.__request('post', '/user/create', data)
   }
 
 }

@@ -28,7 +28,10 @@ export default {
       src: '~/plugins/api.client.ts',
     },
     {
-      src: '~/plugins/vuetify.client.js',
+      src: '~/plugins/vuetify.client.ts',
+    },
+    {
+      src: '~/plugins/utils.client.ts',
     }
   ],
 
@@ -51,12 +54,14 @@ export default {
     '@nuxtjs/axios',
     // https://go.nuxtjs.dev/pwa
     '@nuxtjs/pwa',
+    'cookie-universal-nuxt',
+    '@nuxtjs/toast',
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
-    baseURL: '/',
+    baseURL: 'https://pet-shop.buckhill.com.hr/api/v1',
   },
 
   // PWA module configuration: https://go.nuxtjs.dev/pwa
@@ -85,6 +90,12 @@ export default {
     },
   },
 
+  toast: {
+    position: 'top-right',
+    duration: 2000
+  },
+
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},
 }
+

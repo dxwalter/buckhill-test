@@ -5,16 +5,6 @@
       persistent
       max-width="500px"
     >
-      <template #activator="{ on, attrs }">
-        <v-btn
-          color="primary"
-          dark
-          v-bind="attrs"
-          v-on="on"
-        >
-          Open Dialog
-        </v-btn>
-      </template>
       <v-card class="pa-6">
 
         <div class="d-flex justify-end">
@@ -26,7 +16,9 @@
         </div>
 
         <div class="d-flex align-center flex-column mb-1">
-          <div class="signin-logo"></div>
+          <div class="signin-logo">
+            <img  src="/images/complete-logo.svg">
+          </div>
           <p class="mt-4 signin-header">Log in</p>
         </div>
 
@@ -73,6 +65,7 @@
     export default class Login extends Vue {
       
       showDialog: boolean = true
+      checkbox: boolean = false
 
       closeDialog(): void {
         this.$emit('close-login-dialog')

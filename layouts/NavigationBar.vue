@@ -3,19 +3,23 @@
       <v-app-bar
         color="green"
         app
-        class="px-16"
+        class="px-16 d-flex nav-modifier"
       >
-          <v-toolbar-title>Petson.</v-toolbar-title>
-          <v-tabs color="white" class="d-flex justify-center">
-            <v-tab>
-                Products
-                <v-icon right>
-                  mdi-chevron-down
-                </v-icon>
-            </v-tab>
-            <v-tab>Promotions</v-tab>
-            <v-tab>Blog</v-tab>
-          </v-tabs>
+          <v-toolbar-title class="d-flex nav-img">
+            <img  src="/images/logo.svg" class="mr-2 align-self-center">
+            <div class="align-self-center">Petson.</div>
+          </v-toolbar-title>
+          
+          <div class="d-flex justify-center nav-link">
+            <NuxtLink to="/" class="mr-6">
+              Products
+              <v-icon right color="white">
+                mdi-chevron-down
+              </v-icon>
+            </NuxtLink>
+            <NuxtLink to="/" class="mr-6">Blogs</NuxtLink>
+            <NuxtLink to="/">Promotions</NuxtLink>
+          </div>
 
           <div class="d-flex">
               <v-btn elevation="2" large outlined class="mr-4" color="white">
@@ -59,6 +63,10 @@
         
         loginDialog: boolean = false
         registrationDialog: boolean = false
+
+        get getLoginStatus() {
+          return this.$store.getters['account/getLoginStatus']
+        }
 
         showLoginDialog(): void {
           this.closeRegistrationDialog()

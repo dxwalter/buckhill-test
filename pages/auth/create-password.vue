@@ -4,11 +4,14 @@
     <NavigationBar />
     <v-container class="pa-16">
       <div class="rec-password-container">
-          <div class="page-header">Recover Password</div>
-          <div class="rec-info-text">Enter the email associated with your account and we'll send an email with instructions to reset your password</div>
+          <div class="page-header">Change Password</div>
+          <div class="rec-info-text">Your new passwords must be different from previous passwords.</div>
             <form @submit.prevent="initiateLogin()">
                 <div class="mb-4">
-                    <input  id="" type="email" name="email" placeholder="Email address*" class="text-input">
+                    <input  id="" type="password" name="new_password" placeholder="Password*" class="text-input">
+                </div>
+                <div class="mb-4">
+                    <input  id="" type="password" name="confirm_password" placeholder="Re-enter new password*" class="text-input">
                 </div>
                 <div class="mb-6">
                     <v-btn
@@ -18,17 +21,12 @@
                     large
                     full
                     >
-                    GET RECOVERY LINK
+                    CHANGE PASSWORD
                     </v-btn>
                 </div>
             </form>
       </div>
     </v-container>
-    <PasswordResetLink 
-      v-if="passwordResetLink.length && showDialog"
-      :reset-link="passwordResetLink"
-      @hide-password-link-modal="hideModal"
-    />
     <Footer />
   </v-main>
 </v-app>
@@ -39,22 +37,14 @@
     import Component from "vue-class-component";
     import NavigationBar from '@/layouts/NavigationBar.vue';
     import Footer from '@/layouts/Footer.vue';
-    import PasswordResetLink from '@/components/Recover-password/Password-reset-link-dialog.vue';
     @Component({
       components: {
         NavigationBar,
         Footer,
-        PasswordResetLink
       }
     })
     export default class App extends Vue {
-        passwordResetLink: string  = 'http://www.example.com/foo/bar.html?token=1441307151_4492f25946a2e8e1414a8bb53dab8a6ba1cf4615';
-        showDialog: boolean = true;
 
-        hideModal(): void {
-          this.passwordResetLink = '';
-          this.showDialog = false;
-        }
     };
 </script>
 
