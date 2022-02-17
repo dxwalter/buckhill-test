@@ -118,7 +118,10 @@
           this.userData = getUserDetails.data
           this.signIn = true
 
-          this.$toast.success('Login was successful');
+          setTimeout(() => {
+            this.$toast.success('Login was successful');
+            this.closeDialog()
+          }, 500);
 
         } catch (error: any) {
           this.$toast.error(error.error || error.message || 'An error occurred')

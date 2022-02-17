@@ -97,6 +97,10 @@ class Api {
     return this.__request('post', '/user/login', data)
   }
 
+    recoverPasswordLink(data: any) {
+    return this.__request('post', '/user/forgot-password', data)
+  }
+
   getUser() {
     return this.__request('get', '/user')
   }

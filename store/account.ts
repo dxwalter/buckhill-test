@@ -33,7 +33,7 @@ export const actions: ActionTree<RootState, RootState> = {
     // eslint-disable-next-line no-console
   },
   logout: ({ commit }) => {
-    localStorage.removeItem('flitaa-store')
+    localStorage.removeItem('buckhill-test')
     commit('RESET_STORE_DATA')
   },
 }

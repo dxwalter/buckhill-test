@@ -6,19 +6,22 @@
       <div class="rec-password-container">
           <div class="page-header">Recover Password</div>
           <div class="rec-info-text">Enter the email associated with your account and we'll send an email with instructions to reset your password</div>
-            <form @submit.prevent="initiateLogin()">
+            <form @submit.prevent="getRecoveryLink()">
                 <div class="mb-4">
-                    <input  id="" type="email" name="email" placeholder="Email address*" class="text-input">
+                    <input id="" v-model="recoveryEmail" type="email" name="email" placeholder="Email address*" class="text-input">
                 </div>
                 <div class="mb-6">
                     <v-btn
-                    color="green"
-                    class="btn-100"
-                    dark
-                    large
-                    full
+                      id="getRecoveryLink"
+                      color="green"
+                      class="btn-100"
+                      dark
+                      large
+                      full
+                      type="submit"
                     >
-                    GET RECOVERY LINK
+                      GET RECOVERY LINK
+                      <btn-loader/>
                     </v-btn>
                 </div>
             </form>
@@ -48,13 +51,35 @@
       }
     })
     export default class App extends Vue {
-        passwordResetLink: string  = 'http://www.example.com/foo/bar.html?token=1441307151_4492f25946a2e8e1414a8bb53dab8a6ba1cf4615';
-        showDialog: boolean = true;
+      recoveryEmail: string  = '';
+      passwordResetLink: string  = '';
+      showDialog: boolean = false;
+      $toast: any;
+      $api: any;
 
-        hideModal(): void {
-          this.passwordResetLink = '';
-          this.showDialog = false;
+      hideModal(): void {
+        this.passwordResetLink = '';
+        this.showDialog = false;
+      }
+
+      async getRecoveryLink(): Promise<void> {
+
+        this.$startButtonLoader('getRecoveryLink')
+
+        try {
+          const getLink = await this.$api.recoverPasswordLink({
+            email: this.recoveryEmail
+          })
+          
+          this.passwordResetLink = `${window.location.origin}/auth/create-password?reset_token=${getLink.data.reset_token}`;
+          this.showDialog = true
+
+        } catch (error: any) {
+          this.$toast.error(error.error || error.message || 'An error occurred')
         }
+
+        this.$stopButtonLoader('getRecoveryLink')
+      }
     };
 </script>
 

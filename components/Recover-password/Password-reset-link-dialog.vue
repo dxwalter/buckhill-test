@@ -20,7 +20,7 @@
         </v-alert>
 
         <div class="mb-4">Click on the URL and change your password</div>
-        <NuxtLink :to="resetLink">{{ resetLink }}</NuxtLink>
+        <a :href="resetLink">{{ resetLink }}</a>
 
       </v-card>
     </v-dialog>
