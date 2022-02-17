@@ -9,6 +9,10 @@ export interface RegisterUser {
     phone_number: string
     email: string
 }
+export interface LoginUser {
+  email: string
+  password: string
+}
 
 export type UserData = {
     uuid: string
@@ -21,12 +25,20 @@ export type UserData = {
     is_marketing: boolean,
     updated_at: string,
     created_at: string,
-    token: string
+    token?: string
 }
-
-export interface RegisterUserResponse  {
+export interface AuthenticateUserResponse  {
   success: 1,
   data: UserData,
+  error: null,
+  errors: any[],
+  extra: any[]
+}
+export interface LoginUserResponse  {
+  success: 1,
+  data: {
+    token: string
+  },
   error: null,
   errors: any[],
   extra: any[]

@@ -32,7 +32,8 @@ export default {
     },
     {
       src: '~/plugins/utils.client.ts',
-    }
+    },
+    { src: '~/plugins/vuex-persist.client.js', ssr: false }
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components

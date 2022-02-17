@@ -93,6 +93,14 @@ class Api {
     return this.__request('post', '/user/create', data)
   }
 
+  login(data: any) {
+    return this.__request('post', '/user/login', data)
+  }
+
+  getUser() {
+    return this.__request('get', '/user')
+  }
+
 }
 
 export default new Api()

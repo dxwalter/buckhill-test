@@ -95,7 +95,7 @@
 
     import { Component, Vue } from 'nuxt-property-decorator'
 
-    import { RegisterUser, UserData, RegisterUserResponse } from '../types/'
+    import { RegisterUser, UserData, AuthenticateUserResponse } from '../types/'
 
     @Component({})
     export default class Login extends Vue {
@@ -170,7 +170,7 @@
             password_confirmation: this.confirmPassword,
             phone_number: this.phoneNumber
           }
-          const registration: RegisterUserResponse = await this.$api.register(userData);
+          const registration: AuthenticateUserResponse = await this.$api.register(userData);
           this.userData = registration.data
           this.signUp = true
           this.$toast.success('Account registered successfully')

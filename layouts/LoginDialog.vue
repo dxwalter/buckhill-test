@@ -25,10 +25,10 @@
         <!-- input areas -->
         <form @submit.prevent="initiateLogin()">
           <div class="mb-4">
-            <input  id="" type="email" name="email" placeholder="Email address*" class="text-input">
+            <input  id="" v-model="emailAddress" type="email" name="email" placeholder="Email address*" class="text-input">
           </div>
           <div class="mb-6">
-            <input id="" type="password" name="password" placeholder="Password*" class="text-input">
+            <input id="" v-model="password" type="password" name="password" placeholder="Password*" class="text-input">
           </div>
           <div class="mb-6">
             <v-checkbox
@@ -38,13 +38,16 @@
           </div>
           <div class="mb-6">
             <v-btn
+              id="initiateLogin"
               color="green"
               class="btn-100"
               dark
               large
               full
+              type="submit"
             >
             LOG IN
+            <btn-loader/>
             </v-btn>
           </div>
           <div class="d-flex justify-space-between">
@@ -55,17 +58,33 @@
 
       </v-card>
     </v-dialog>
+
+      <set-user-token
+        v-if="signIn"
+        :user-data="userData"
+      />
   </v-row>
 </template>
 
 <script lang="ts">
 
-    import { Component, Vue } from 'nuxt-property-decorator'
+    import { Component, Vue } from 'nuxt-property-decorator';
+    import { LoginUser, LoginUserResponse, AuthenticateUserResponse, UserData } from '../types/'
+
     @Component({})
     export default class Login extends Vue {
       
-      showDialog: boolean = true
-      checkbox: boolean = false
+      showDialog: boolean = true;
+      checkbox: boolean = false;
+      userData: UserData | null = null
+      signIn: boolean = false
+
+      emailAddress: string = '';
+      password: string = '';
+      $toast: any;
+      $api: any;
+      $stopButtonLoader: any;
+      $startButtonLoader: any;
 
       closeDialog(): void {
         this.$emit('close-login-dialog')
@@ -77,6 +96,35 @@
 
       async initiateLogin(): Promise<void> {
 
+        if (!this.emailAddress.length || !this.password) {
+          return this.$toast.error('Enter an email address and password to continue')
+        }
+
+        this.$startButtonLoader('initiateLogin')
+        
+        try {
+
+          const loginObject: LoginUser = {
+            email: this.emailAddress,
+            password: this.password
+          }
+
+          const loginUser: LoginUserResponse = await this.$api.login(loginObject);
+          this.$api.setToken(loginUser.data.token);
+
+          const getUserDetails: AuthenticateUserResponse = await this.$api.getUser();
+          getUserDetails.data.token = loginUser.data.token;
+          
+          this.userData = getUserDetails.data
+          this.signIn = true
+
+          this.$toast.success('Login was successful');
+
+        } catch (error: any) {
+          this.$toast.error(error.error || error.message || 'An error occurred')
+        }
+
+        this.$stopButtonLoader('initiateLogin')
       }
     };
 </script>
