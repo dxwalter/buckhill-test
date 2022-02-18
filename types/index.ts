@@ -43,3 +43,16 @@ export interface LoginUserResponse  {
   errors: any[],
   extra: any[]
 }
+
+export interface LatestPromotion {
+  uuid: string
+  title: string
+  content: string
+  metadata: {
+    image: string
+    valid_to: string
+    valid_from: string
+  }
+  created_at: string
+  updated_at: string
+}

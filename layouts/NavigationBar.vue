@@ -32,8 +32,9 @@
               <v-btn v-if="!getLoginStatus" elevation="2" large outlined color="white" @click="showLoginDialog">
                   Login
               </v-btn>
-              <v-btn v-if="getLoginStatus" elevation="2" large outlined color="white" @click="logOutUser">
+              <v-btn v-if="getLoginStatus" id="logOutUser" elevation="2" large outlined color="white" @click="logOutUser">
                   Logout
+                  <btn-loader/>
               </v-btn>
             </div>
             <div v-if="getLoginStatus" class="nav-avatar align-self-center">
@@ -73,6 +74,8 @@
         registrationDialog: boolean = false;
         defaultAvatar: string = '/images/avatar.png'
       $cookies: any;
+      $toast: any;
+      $api: any;
 
         get getLoginStatus() {
           return this.$store.getters['account/getLoginStatus']
@@ -103,10 +106,20 @@
         }
 
         async logOutUser(): Promise<void> {
-          await this.$cookies.remove('token')
-          // eslint-disable-next-line no-unused-expressions
-          this.$store.dispatch('account/logout')
-          window.location.href = window.location.origin
+
+          this.$startButtonLoader('logOutUser')
+
+          try {
+            await this.$api.logout()
+            await this.$cookies.remove('token')
+            // eslint-disable-next-line no-unused-expressions
+            this.$store.dispatch('account/logout')
+            window.location.href = window.location.origin 
+          } catch (error: any) {
+            this.$toast.error(error.error || error.message || 'An error occurred')
+          }
+
+          this.$stopButtonLoader('logOutUser')
         }
     };
 </script>

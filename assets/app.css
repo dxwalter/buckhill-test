@@ -154,3 +154,107 @@
     align-self: center;
     cursor: pointer;
   }
+
+  .inner-container {
+    width: 70%;
+    margin: 0 auto;
+  }
+
+  .search-box-container {
+    display: flex;
+    justify-content: center;
+    width: 450px;
+    margin: 0 auto;
+  }
+
+  .page-setup-container {
+      width: 100%;
+      height: calc(100vh - 120px);
+      background-color: transparent;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+  }
+
+  .loader {
+    border: 2px solid #f3f3f3;
+    -webkit-animation: spin 1s linear infinite;
+    animation: spin 1s linear infinite;
+    border-top: 2px solid transparent;
+    border-radius:50%;
+    width:20px;
+    height:20px;
+    margin:0 auto
+  }  
+  
+  @-webkit-keyframes spin{
+    0%{
+      -webkit-transform:rotate(0deg);
+      transform:rotate(0deg)
+    }
+    to {
+      -webkit-transform: rotate(1turn);
+      transform: rotate(1turn);
+    }
+  }
+  @keyframes spin {
+    0% {
+      -webkit-transform: rotate(0deg);
+      transform: rotate(0deg);
+    }
+    to {
+      -webkit-transform: rotate(1turn);
+      transform: rotate(1turn);
+    }
+  }
+  
+  @-moz-keyframes spin {
+    0% {
+      -webkit-transform: rotate(0deg);
+      transform: rotate(0deg);
+    }
+    to {
+      -webkit-transform: rotate(1turn);
+      transform: rotate(1turn);
+    }
+  }
+
+  .loader-container {
+    display: flex;
+    /* // margin-right: 10px; */
+    position: relative;
+    width: 16px;
+    height: 16px;
+  }
+
+  .loader-container .loader-action {
+    display: block;
+    background-color: transparent;
+  }
+  
+  .content-loader .loader-action {
+    display: flex;
+    background-color: transparent;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .content-loader .loader-action .loader {
+    width: 50px;
+    height: 50px;
+    border: 2px solid rgba(0, 0, 0, 0.5);
+    border-top: 2px solid transparent;
+  }
+
+  .page-error-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+  }
+
+  .page-error-content .message {
+      font-size: 24px;
+  }

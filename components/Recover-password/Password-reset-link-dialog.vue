@@ -20,7 +20,7 @@
         </v-alert>
 
         <div class="mb-4">Click on the URL and change your password</div>
-        <a :href="resetLink">{{ resetLink }}</a>
+        <NuxtLink :to="mainUrl">{{ resetUrl }}</NuxtLink>
 
       </v-card>
     </v-dialog>
@@ -29,13 +29,17 @@
 
 <script lang="ts">
 
-    import { Component, Vue, Prop } from 'nuxt-property-decorator'
+
+
+    import { Component, Vue, Prop, Watch } from 'nuxt-property-decorator'
     @Component({})
     export default class ForgotPasswordLink extends Vue {
 
         @Prop({ required: false, type: String, default: '' })
         resetLink!: {};
 
+        resetUrl: string = ''   
+        mainUrl: string = ''   
         showDialog: boolean = true
         checkbox: boolean = false
 
@@ -46,5 +50,11 @@
         async initiateLogin(): Promise<void> {
 
         }
+
+        @Watch('resetLink', { immediate: true, deep: true }) checkRecipient(newVal: string) {
+          this.resetUrl = `${window.location.origin}/auth/create-password?reset_token=${newVal}`
+          this.mainUrl = `/auth/create-password?reset_token=${newVal}`
+        }
+
     };
 </script>

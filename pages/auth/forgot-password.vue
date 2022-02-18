@@ -38,8 +38,7 @@
 </template>
 
 <script lang="ts">
-    import Vue from "vue";
-    import Component from "vue-class-component";
+    import { Component, Vue } from 'nuxt-property-decorator'
     import NavigationBar from '@/layouts/NavigationBar.vue';
     import Footer from '@/layouts/Footer.vue';
     import PasswordResetLink from '@/components/Recover-password/Password-reset-link-dialog.vue';
@@ -48,7 +47,8 @@
         NavigationBar,
         Footer,
         PasswordResetLink
-      }
+      },
+      middleware: 'only_unauthenticated',
     })
     export default class App extends Vue {
       recoveryEmail: string  = '';
@@ -71,7 +71,7 @@
             email: this.recoveryEmail
           })
           
-          this.passwordResetLink = `${window.location.origin}/auth/create-password?reset_token=${getLink.data.reset_token}`;
+          this.passwordResetLink = `${getLink.data.reset_token}`;
           this.showDialog = true
 
         } catch (error: any) {

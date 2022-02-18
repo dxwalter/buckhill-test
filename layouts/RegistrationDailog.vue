@@ -106,13 +106,13 @@
       $toast: any
 
       indicateInterest: boolean = false
-      firstName: string = 'qwqw';
-      lastName: string = 'q323';
-      email: string = 'q@gmail.com';
-      password: string = '12345678';
-      confirmPassword: string = '12345678';
-      phoneNumber: string = '1212121';
-      homeAddress: string = '1212131323';
+      firstName: string = '';
+      lastName: string = '';
+      email: string = '';
+      password: string = '';
+      confirmPassword: string = '';
+      phoneNumber: string = '';
+      homeAddress: string = '';
       $api: any;
       $startButtonLoader: any;
       $stopButtonLoader: any;  
@@ -143,8 +143,8 @@
           return this.$toast.error('Enter a valid phone number')
         }
 
-        if (this.password.length < 5) {
-          return this.$toast.error('Your password must be greater than 4 characters')
+        if (this.password.length < 8) {
+          return this.$toast.error('Your password must be at least 8 characters')
         }
 
         if (this.password !== this.confirmPassword) {

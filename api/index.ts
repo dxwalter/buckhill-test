@@ -52,7 +52,7 @@ class Api {
         contentType
       )
 
-      if (res.data.success === 1) {
+      if (res.data.success === 1 || res.data.success === undefined) {
         return res.data
       }
       return Promise.reject(res.data)
@@ -97,12 +97,26 @@ class Api {
     return this.__request('post', '/user/login', data)
   }
 
-    recoverPasswordLink(data: any) {
+  logout() {
+    return this.__request('get', '/user/logout')
+  }
+
+  recoverPasswordLink(data: any) {
     return this.__request('post', '/user/forgot-password', data)
+  }
+
+  resetPassword(data: any) {
+    return this.__request('post', '/user/reset-password-token', data)
   }
 
   getUser() {
     return this.__request('get', '/user')
+  }
+
+  // promotion
+
+  getPromotion () {
+    return this.__request('get', '/main/promotions?page=1&limit=1&sortBy=image&desc=true&valid=true')
   }
 
 }
