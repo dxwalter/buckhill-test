@@ -9,8 +9,8 @@ export const state = () => ({
 export type RootState = ReturnType<typeof state>
 
 export const getters: GetterTree<RootState, RootState> = {
-  getData: (state) => state.user,
-  getLoginStatus: (state) => state.isLoggedIn,
+  getData: (state): UserData | null => state.user,
+  getLoginStatus: (state): boolean | number => state.isLoggedIn,
   getProfilePicture: (state) => state.user?.avatar,
 }
 
