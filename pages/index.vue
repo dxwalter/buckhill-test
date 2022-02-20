@@ -10,6 +10,7 @@
           <div v-if="!isLoadingComplete && !networkError" class="page-setup-container">
             <page-loader />
           </div>
+          <!-- display error message when api request fetching page info fails -->
           <div v-if="!isLoadingComplete && networkError" class="page-setup-container">
               <div class="page-error-content">
                 <div class="mb-4"><v-icon large color="green darken-2"> mdi-water-boiler-alert </v-icon> </div>
@@ -18,48 +19,62 @@
               </div>
           </div>
         </div>
+
         <!-- show page content -->
         <div v-else>
+          
           <!-- product search field -->
-
           <search-input />
 
           <!-- promotion -->
           <div class="mt-4 mb-16">
-            <promotion-banner />
+            <promotion-banner 
+              :promotion-data="latestPromotion"
+            />
           </div>
 
           <!-- Category 1 -->
-          <div class="mt-4 mb-4">
-            <home-slider />
+          <div class="mt-4 mb-16">
+            <home-slider 
+            :product-listing="productsFromCategoryOne"
+            />
           </div>
 
           <!-- blog -->
-          <div></div>
+          <div class="mt-4 mb-16">
+            <blog-story />
+          </div>
 
           <!-- category 2 -->
-          <div></div>
+          <div class="mt-4 mb-16">
+            <home-slider 
+              :product-listing="productsFromCategoryTwo"  
+            />
+          </div>
 
           <!-- blog -->
-          <div></div>
+          <div class="mb-16">
+            <blog-story />
+          </div>
         </div>
-
-
       </div>
     </v-container>
   </v-main>
+  <Footer />
 </v-app>
 </template>
 
 <script lang="ts">
 
     import { Component, Vue } from 'nuxt-property-decorator';
-    import { LatestPromotion, Category } from '../types'
+    import { LatestPromotion, Category, BlogPost } from '../types'
     import NavigationBar from '@/layouts/NavigationBar.vue';
+    import Footer from '@/layouts/Footer.vue';
 
     @Component({
       components: {
         NavigationBar,
+        Footer
       }
     })
     export default class ProductListing extends Vue {
@@ -84,6 +99,8 @@
           created_at: '',
           updated_at: ''
         }
+
+        allBlogPost: BlogPost[] = [];
 
 
         get allCategories () {
@@ -125,7 +142,7 @@
         async getRandomProduct (): Promise<void> {
           const allCategories: Category[] = this.allCategories
           // clone allCategories array and retrieve two random elements
-          const randomItems = await JSON.parse(JSON.stringify(allCategories)).sort(() => .5 - Math.random()).slice(0, 2);
+          const randomItems = JSON.parse(JSON.stringify(allCategories)).sort(() => .5 - Math.random()).slice(0, 2);
 
           const urlParams: { url: string, categoryName: string}[] = []
 
@@ -160,7 +177,18 @@
         }
 
         async getBlogPost (): Promise<void> {
-
+          try {
+            const getBlogPost = await this.$api.getBlogPostList();
+            if (getBlogPost.data.length > 2) {
+              this.allBlogPost = this.$getRandomBlogPost(getBlogPost.data)
+            } else {
+              this.allBlogPost = getBlogPost.data
+            }
+          } catch (error: any) {
+            this.networkError = true
+            this.pageSetupErrorMessage = error.error || error.message || 'An error occurred'
+            throw new Error(error)
+          }
         }
 
         async pageSetup(): Promise<void> {

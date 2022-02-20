@@ -1,136 +1,19 @@
 <template>
-    <div>
-        <div class="products-category-header">Category Name</div>
+    <div v-if="allProduct.length">
+        <div class="products-category-header">{{ categoryName }}</div>
         <VueSlickCarousel v-bind="settings">
-        <div class="item">
+        <div v-for="product in allProduct" :key="product.uuid" class="item">
             <div class="card product-card">
-                <div class="product-image-area">
-                    <img src="/images/demo.jpg" alt="" srcset="">
-                </div>
+                <product-image
+                    :image-data="{
+                        productId: product.uuid,
+                        imageId: product.metadata.image
+                    }"
+                 />
                 <div>
-                    <NuxtLink to="#" class="product-name">Product name</NuxtLink>
-                    <div class="product-brand-name">Brand</div>
-                    <div class="product-price">Price</div>
-                </div>
-            </div>
-        </div>
-        <div class="item">
-            <div class="card product-card">
-                <div class="product-image-area">
-                    <img src="/images/demo.jpg" alt="" srcset="">
-                </div>
-                <div>
-                    <NuxtLink to="#" class="product-name">Product name</NuxtLink>
-                    <div class="product-brand-name">Brand</div>
-                    <div class="product-price">Price</div>
-                </div>
-            </div>
-        </div>
-        <div class="item">
-            <div class="card product-card">
-                <div class="product-image-area">
-                    <img src="/images/demo.jpg" alt="" srcset="">
-                </div>
-                <div>
-                    <NuxtLink to="#" class="product-name">Product name</NuxtLink>
-                    <div class="product-brand-name">Brand</div>
-                    <div class="product-price">Price</div>
-                </div>
-            </div>
-        </div>
-        <div class="item">
-            <div class="card product-card">
-                <div class="product-image-area">
-                    <img src="/images/demo.jpg" alt="" srcset="">
-                </div>
-                <div>
-                    <NuxtLink to="#" class="product-name">Product name</NuxtLink>
-                    <div class="product-brand-name">Brand</div>
-                    <div class="product-price">Price</div>
-                </div>
-            </div>
-        </div>
-        <div class="item">
-            <div class="card product-card">
-                <div class="product-image-area">
-                    <img src="/images/demo.jpg" alt="" srcset="">
-                </div>
-                <div>
-                    <NuxtLink to="#" class="product-name">Product name</NuxtLink>
-                    <div class="product-brand-name">Brand</div>
-                    <div class="product-price">Price</div>
-                </div>
-            </div>
-        </div>
-        <div class="item">
-            <div class="card product-card">
-                <div class="product-image-area">
-                    <img src="/images/demo.jpg" alt="" srcset="">
-                </div>
-                <div>
-                    <NuxtLink to="#" class="product-name">Product name</NuxtLink>
-                    <div class="product-brand-name">Brand</div>
-                    <div class="product-price">Price</div>
-                </div>
-            </div>
-        </div>
-        <div class="item">
-            <div class="card product-card">
-                <div class="product-image-area">
-                    <img src="/images/demo.jpg" alt="" srcset="">
-                </div>
-                <div>
-                    <NuxtLink to="#" class="product-name">Product name</NuxtLink>
-                    <div class="product-brand-name">Brand</div>
-                    <div class="product-price">Price</div>
-                </div>
-            </div>
-        </div>
-        <div class="item">
-            <div class="card product-card">
-                <div class="product-image-area">
-                    <img src="/images/demo.jpg" alt="" srcset="">
-                </div>
-                <div>
-                    <NuxtLink to="#" class="product-name">Product name</NuxtLink>
-                    <div class="product-brand-name">Brand</div>
-                    <div class="product-price">Price</div>
-                </div>
-            </div>
-        </div>
-        <div class="item">
-            <div class="card product-card">
-                <div class="product-image-area">
-                    <img src="/images/demo.jpg" alt="" srcset="">
-                </div>
-                <div>
-                    <NuxtLink to="#" class="product-name">Product name</NuxtLink>
-                    <div class="product-brand-name">Brand</div>
-                    <div class="product-price">Price</div>
-                </div>
-            </div>
-        </div>
-        <div class="item">
-            <div class="card product-card">
-                <div class="product-image-area">
-                    <img src="/images/demo.jpg" alt="" srcset="">
-                </div>
-                <div>
-                    <NuxtLink to="#" class="product-name">Product name</NuxtLink>
-                    <div class="product-brand-name">Brand</div>
-                    <div class="product-price">Price</div>
-                </div>
-            </div>
-        </div>
-        <div class="item">
-            <div class="card product-card">
-                <div class="product-image-area">
-                    <img src="/images/demo.jpg" alt="" srcset="">
-                </div>
-                <div>
-                    <NuxtLink to="#" class="product-name">Product name</NuxtLink>
-                    <div class="product-brand-name">Brand</div>
-                    <div class="product-price">Price</div>
+                    <NuxtLink to="#" class="product-name" :title="product.title">{{ product.title }}</NuxtLink>
+                    <div class="product-brand-name">{{ product.brand.title }}</div>
+                    <div class="product-price">{{ product.price }} Kn</div>
                 </div>
             </div>
         </div>
@@ -138,9 +21,11 @@
     </div>
 </template>
 <script lang="ts">
-import { Component, Vue } from 'nuxt-property-decorator';
+import { Component, Vue, Prop, Watch } from 'nuxt-property-decorator';
 import VueSlickCarousel from 'vue-slick-carousel'
-import 'vue-slick-carousel/dist/vue-slick-carousel.css'
+import 'vue-slick-carousel/dist/vue-slick-carousel.cs~s'
+
+import { SliderProduct, Product } from '../types'
 // optional style for arrows & dots
 import 'vue-slick-carousel/dist/vue-slick-carousel-theme.css'
 
@@ -149,7 +34,14 @@ import 'vue-slick-carousel/dist/vue-slick-carousel-theme.css'
         VueSlickCarousel
     }
 })
-export default class PromotionBanner extends Vue {
+export default class ProductSlider extends Vue {
+
+    @Prop({ required: false, type: Object, default: {} })
+    productListing!: {};
+
+    categoryName: string = '';
+    allProduct: Product[] = []
+
     settings = {
         "dots": false,
         "arrows": true,
@@ -184,6 +76,11 @@ export default class PromotionBanner extends Vue {
             }
             }
         ]
+    }
+
+    @Watch('productListing', { immediate: true, deep: true }) checkRecipient(newVal: SliderProduct) {
+        this.categoryName = newVal.categoryName
+        this.allProduct = newVal.products
     }
 }
 </script>

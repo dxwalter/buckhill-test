@@ -64,3 +64,51 @@ export interface Category {
   created_at: string
   updated_at: string
 }
+
+export interface BlogPost {
+  uuid: string
+  title: string
+  slug: string
+  content: string
+  metadata: {
+      image: string
+      author: string
+  }
+  created_at: string
+  updated_at: string
+}
+
+export interface getImageStatus {
+  status: boolean
+  message?: string
+}
+
+export interface Brand {
+  uuid: string
+  title: string
+  slug: string
+  created_at: string
+  updated_at: string
+}
+
+export interface Product {
+  category_uuid: string
+  title: string
+  uuid: string
+  price: number
+  description: string
+  metadata: {
+    brand: string
+    image: string
+  }
+  created_at: string,
+  updated_at: string,
+  deleted_at: null,
+  category: Category
+  brand: Brand
+}
+
+export interface SliderProduct {
+  categoryName: string
+  products: Product[]
+}

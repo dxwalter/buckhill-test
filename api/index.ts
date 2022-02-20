@@ -157,10 +157,25 @@ class Api {
     return await this.__request('get', '/categories')
   }
 
+  async getBlogPostList () {
+    return await this.__request('get', '/main/blog')
+  }
+
   async getProductsFromMultiCategories(url: string[]) {
     const requestOne: Promise<AxiosResponse<any>> = axios.get(`${this.base}/${url[0]}`)
     const requestTwo: Promise<AxiosResponse<any>> = axios.get(`${this.base}/${url[1]}`)
     return await this.__multiRequest([requestOne, requestTwo])
+  }
+
+  async getImageFile (uuid: string) {
+    // return await this.__request('get', '/file/' + uuid)
+    const url = `${this.base}/file/${uuid}`
+    // let data;
+    const response = await fetch(url)
+    if (!response.ok) {
+      throw new Error('Could not get image. Kindly check your internet connection')
+    }
+    return response.blob()
   }
 
 }
