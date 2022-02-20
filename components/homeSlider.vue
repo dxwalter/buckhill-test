@@ -23,7 +23,7 @@
 <script lang="ts">
 import { Component, Vue, Prop, Watch } from 'nuxt-property-decorator';
 import VueSlickCarousel from 'vue-slick-carousel'
-import 'vue-slick-carousel/dist/vue-slick-carousel.cs~s'
+import 'vue-slick-carousel/dist/vue-slick-carousel.css'
 
 import { SliderProduct, Product } from '../types'
 // optional style for arrows & dots
