@@ -15,7 +15,7 @@
               <div class="page-error-content">
                 <div class="mb-4"><v-icon large color="green darken-2"> mdi-water-boiler-alert </v-icon> </div>
                 <div class="message mb-6">An error occurred. Kindly try again</div>
-                <v-btn color="green" dark large @click="pageSetup"> Try again</v-btn>
+                <v-btn color="green" dark large @click="getProductByCategory"> Try again</v-btn>
               </div>
           </div>
         </div>
