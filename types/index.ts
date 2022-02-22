@@ -79,6 +79,7 @@ export interface BlogPost {
 }
 
 export interface getImageStatus {
+  src?: string
   status: boolean
   message?: string
 }

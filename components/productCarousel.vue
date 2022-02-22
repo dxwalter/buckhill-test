@@ -1,22 +1,8 @@
 <template>
     <div v-if="allProduct.length">
-        <div class="products-category-header">{{ categoryName }}</div>
+        <NuxtLink :to="`/category/${categoryId}`" class="products-category-header">{{ categoryName }}</NuxtLink>
         <VueSlickCarousel v-bind="settings">
-        <div v-for="product in allProduct" :key="product.uuid" class="item">
-            <div class="card product-card">
-                <product-image
-                    :image-data="{
-                        productId: product.uuid,
-                        imageId: product.metadata.image
-                    }"
-                 />
-                <div>
-                    <NuxtLink to="#" class="product-name" :title="product.title">{{ product.title }}</NuxtLink>
-                    <div class="product-brand-name">{{ product.brand.title }}</div>
-                    <div class="product-price">{{ product.price }} Kn</div>
-                </div>
-            </div>
-        </div>
+            <product-item v-for="product in allProduct" :key="product.uuid" :product-item="product"  :show-cart-btn="false"/>
         </VueSlickCarousel>
     </div>
 </template>
@@ -39,6 +25,7 @@ export default class ProductSlider extends Vue {
     @Prop({ required: false, type: Object, default: {} })
     productListing!: {};
 
+    categoryId: string = '';
     categoryName: string = '';
     allProduct: Product[] = []
 
@@ -79,6 +66,7 @@ export default class ProductSlider extends Vue {
     }
 
     @Watch('productListing', { immediate: true, deep: true }) checkRecipient(newVal: SliderProduct) {
+        this.categoryId = newVal.products[0]?.category_uuid
         this.categoryName = newVal.categoryName
         this.allProduct = newVal.products
     }

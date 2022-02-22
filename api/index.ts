@@ -167,6 +167,11 @@ class Api {
     return await this.__multiRequest([requestOne, requestTwo])
   }
 
+
+  async getProductByCategory(id: string) {
+    return await this.__request('get', '/products?category=' + id)
+  }
+
   async getImageFile (uuid: string) {
     // return await this.__request('get', '/file/' + uuid)
     const url = `${this.base}/file/${uuid}`

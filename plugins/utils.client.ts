@@ -37,10 +37,12 @@ plugin.$getImageFIle = async (uuid: string, target: string) => {
   try {
     const getImage = await api.getImageFile(uuid)
     const imageId: HTMLInputElement = document.getElementById(`${target}`) as HTMLInputElement;
-    imageId.src = URL.createObjectURL(getImage)
+    const src = URL.createObjectURL(getImage)
+    imageId.src = src
     
     return {
       status: true,
+      src
     }
   } catch (error) {
     return {

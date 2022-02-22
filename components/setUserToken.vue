@@ -14,7 +14,7 @@
         $api: any;
         $cookies: any;
 
-        @Watch('userData', { immediate: true, deep: true }) checkRecipient(newVal: UserData) {
+        @Watch('userData', { immediate: true, deep: true }) setUpToken(newVal: UserData) {
             
             this.$api.setToken(newVal.token)
             this.$store.dispatch('account/saveUserData', newVal)

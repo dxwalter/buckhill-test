@@ -35,26 +35,32 @@
 
           <!-- Category 1 -->
           <div class="mt-4 mb-16">
-            <home-slider 
-            :product-listing="productsFromCategoryOne"
-            />
+            <product-carousel :product-listing="productsFromCategoryOne" />
           </div>
 
           <!-- blog -->
           <div class="mt-4 mb-16">
-            <blog-story />
+            <blog-story 
+            :blog-post="{
+              post: allBlogPost[0],
+              swap: false
+            }"
+            />
           </div>
 
           <!-- category 2 -->
           <div class="mt-4 mb-16">
-            <home-slider 
-              :product-listing="productsFromCategoryTwo"  
-            />
+            <product-carousel :product-listing="productsFromCategoryTwo" />
           </div>
 
           <!-- blog -->
           <div class="mb-16">
-            <blog-story />
+            <blog-story 
+            :blog-post="{
+              post: allBlogPost[0],
+              swap: true
+            }"
+          />
           </div>
         </div>
       </div>
@@ -67,7 +73,7 @@
 <script lang="ts">
 
     import { Component, Vue } from 'nuxt-property-decorator';
-    import { LatestPromotion, Category, BlogPost } from '../types'
+    import { LatestPromotion, Category, BlogPost, Product } from '../types'
     import NavigationBar from '@/layouts/NavigationBar.vue';
     import Footer from '@/layouts/Footer.vue';
 
@@ -155,8 +161,8 @@
 
           try {
 
-            const getAllProducts = await this.$api.getProductsFromMultiCategories([urlParams[0].url, urlParams[1].url ])
-
+            const getAllProducts: Product[] = await this.$api.getProductsFromMultiCategories([urlParams[0].url, urlParams[1].url ])
+            
             this.productsFromCategoryOne = {
               categoryName: urlParams[0].categoryName,
               products: getAllProducts[0]
