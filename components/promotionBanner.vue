@@ -29,6 +29,7 @@ export default class PromotionBanner extends Vue {
     }
 
     @Watch('promotionData', { immediate: true, deep: true }) setUpBanner(newVal: LatestPromotion) {
+        if (newVal.title === undefined) return
         this.getImageFile(newVal.metadata.image)
         this.promotionTitle = newVal.title
         this.promotionContent = newVal.content

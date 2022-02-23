@@ -109,6 +109,19 @@ export interface Product {
   brand: Brand
 }
 
+export interface CartItem {
+  category_uuid: string
+  title: string
+  uuid: string
+  price: number
+  description: string
+  metadata: {
+    brand: string
+    image: string
+  }
+  quantity: number
+}
+
 export interface SliderProduct {
   categoryName: string
   products: Product[]

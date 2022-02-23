@@ -12,21 +12,35 @@
                     <div class="product-brand-name">{{ product.brand.title }}</div>
                     <div class="product-price" :class="[showCartBtn ? 'bolden-price' : '']">{{ product.price }} Kn</div>
                 </div>
-                <div v-if="showCartBtn" class="mt-2 neg-mg-8">
+                <div v-if="showCartBtn && !itemExistStatus" class="mt-2 neg-mg-8">
                         <v-btn
                             color="green    "
                             class="ma-2 white--text"
+                            @click="addToCart"
                         >
                             <v-icon left dark> mdi-cart </v-icon>
                             ADD TO CART
                         </v-btn>
                 </div>
+
+                <div v-if="showCartBtn && itemExistStatus" class="mt-2 neg-mg-8">
+                        <v-btn
+                            color="orange"
+                            class="ma-2 white--text"
+                            outlined
+                            @click="removeFromCart"
+                        >
+                            <v-icon left dark> mdi-cart-off </v-icon>
+                            REMOVE FROM CART
+                        </v-btn>
+                </div>
+
             </div>
     </div>
 </template>
 <script lang="ts">
 import { Component, Vue, Prop, Watch } from 'nuxt-property-decorator'
-import { Product } from '../types'
+import { Product, CartItem } from '../types'
 @Component
 export default class ProductItem extends Vue {
     @Prop({ required: false, type: Object, default: {} })
@@ -64,8 +78,46 @@ export default class ProductItem extends Vue {
         }
     }
 
+    $toast: any;
+
+    itemExistStatus: number = 0
+
+    itemExistsInCart(): void {
+        const getAllCart: CartItem[] = this.$store.getters['cart/getAllCart']; 
+
+        const item: CartItem[] = getAllCart.filter((item) => item.uuid === this.product.uuid)
+
+        this.itemExistStatus = item.length
+    }
+
+    addToCart(): void {
+        const cartData: CartItem = {
+            category_uuid: this.product.category_uuid,
+            title: this.product.title,
+            uuid: this.product.uuid,
+            price: this.product.price,
+            description: this.product.description,
+            metadata: {
+                brand: this.product.metadata.brand,
+                image: this.product.metadata.image
+            },
+            quantity: 1
+        }
+
+        this.$store.dispatch('cart/addToCart', cartData)
+
+        // this.$toast.success('Item added to cart');
+        this.itemExistStatus = 1
+    }
+
+    removeFromCart(): void {
+        this.$store.dispatch('cart/removeCartItem', this.product.uuid)
+        this.itemExistStatus = 0
+    }
+
     @Watch('productItem', { immediate: true, deep: true }) setUpToken(newVal: Product) {
         this.product = newVal
+        this.itemExistsInCart()
     }
 }
 </script>

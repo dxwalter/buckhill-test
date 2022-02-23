@@ -29,7 +29,48 @@
 
 
             <div v-if="productList.length > 0" class="category-container mt-4 mb-16">
-                <div class="category-sidebar"></div>
+                
+                
+                <div class="category-sidebar">  
+                  <v-expansion-panels focusable>
+                    <v-expansion-panel>
+                      <v-expansion-panel-header>Price</v-expansion-panel-header>
+                      <v-expansion-panel-content>
+                        <div class="" >
+                          <v-range-slider
+                            hint="Select price range"
+                            max="5000"
+                            min="0"
+                          ></v-range-slider>
+                        </div>
+                      </v-expansion-panel-content>
+                    </v-expansion-panel>
+
+
+                    <v-expansion-panel>
+                      <v-expansion-panel-header>Brand</v-expansion-panel-header>
+                      <v-expansion-panel-content>
+                        <div v-for="brand in allBrands" :key="brand.uuid" class="expand-arc-item" @click="selectBarnd(brand.title, brand.uuid)">
+                          <div>{{ brand.title }}</div>
+                          <div>(0)</div>
+                        </div>
+                      </v-expansion-panel-content>
+                    </v-expansion-panel>
+
+
+                    <v-expansion-panel>
+                      <v-expansion-panel-header>Category</v-expansion-panel-header>
+                      <v-expansion-panel-content>
+                        <div v-for="category in allCategories" :key="category.uuid" class="expand-arc-item" @click="selectBarnd(category.title, category.uuid)">
+                          <div>{{ category.title }}</div>
+                          <div>(0)</div>
+                        </div>
+                      </v-expansion-panel-content>
+                    </v-expansion-panel>
+                  </v-expansion-panels>
+                </div>
+
+
                 <div class="category-product-listing">
                     <product-item v-for="product in productList" :key="product.uuid" :product-item="product" :show-cart-btn="true" />
                 </div>
@@ -45,8 +86,6 @@
                 </div>
             </div>
           
-
-
         </div>
       </div>
     </v-container>
@@ -84,6 +123,22 @@
 
         get allCategories () {
           return this.$store.getters['categories/getAllCategories'];
+        }
+
+        get allBrands () {
+          return this.$store.getters['brands/getAllBrands'];
+        }
+
+        selectBarnd(title: string, id: string): void {
+          console.log({
+            title, id
+          })
+        }
+
+        selectCategory(title: string, id: string): void {
+          console.log({
+            title, id
+          })
         }
 
 

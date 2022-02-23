@@ -286,7 +286,6 @@
     width: 40px !important;
     height: 40px !important;
     border-radius: 50%;
-    /* background-color: red !important; */
   }
 
   .slick-arrow:hover {
@@ -540,13 +539,13 @@
 
 .category-container {
   display: flex;
+  width: 100%;
 }
 
 .category-sidebar{
-  width: 200px;
-  height: 500px;
-  background-color: red;
-  margin-right: 40px;
+  width: 220px;
+  height: auto;
+  margin-right: 20px;
   flex-shrink: 0;
 }
 
@@ -584,4 +583,11 @@
 .product-price.bolden-price {
   font-size: 18px;
   font-weight: bold;
+}
+
+.expand-arc-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  cursor: pointer;
 }

@@ -150,11 +150,15 @@ class Api {
   // promotion
 
   async getPromotion () {
-    return await this.__request('get', '/main/promotions?page=1&limit=1&sortBy=image&desc=true&valid=true')
+    return await this.__request('get', '/main/promotions?limit=1&desc=true&valid=true')
   }
 
   async getAllCategories () {
     return await this.__request('get', '/categories')
+  }
+
+  async getAllBrands () {
+    return await this.__request('get', '/brands')
   }
 
   async getBlogPostList () {

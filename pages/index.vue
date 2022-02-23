@@ -89,6 +89,7 @@
         networkError: boolean = false
         pageSetupErrorMessage: string = ''
         $api: any;
+        $toast: any;
 
         productsFromCategoryOne: any = {}
         productsFromCategoryTwo: any = {}
@@ -117,7 +118,7 @@
           try {
             
             const promotion = await this.$api.getPromotion();
-            this.latestPromotion = promotion.data[0]
+            this.latestPromotion = promotion.data.length > 0 ? promotion.data[0] : {}
 
           } catch (error: any) {
             this.networkError = true
@@ -142,6 +143,23 @@
             this.networkError = true
             this.pageSetupErrorMessage = error.error || error.message || 'An error occurred'
             throw new Error(error)
+          }
+        }
+
+        async getAllBrands (): Promise<void> {
+            
+          const currentTime: number = Math.round((new Date()).getTime() / 1000);
+          const getLastUpdated: number = this.$store.getters['brands/getBrandLastUpdated'];
+          
+          if ((currentTime - getLastUpdated) <= 1800) return
+
+          try {
+            const brands = await this.$api.getAllBrands();
+            this.$store.dispatch('brands/saveAllBrands', brands.data)
+            this.$store.dispatch('brands/saveLastBrandUpdated', currentTime)
+
+          } catch (error: any) {
+            this.$toast.error(error.error || error.message || 'An error occurred')
           }
         }
 
@@ -206,7 +224,8 @@
             await this.getPromotions();
             await this.getAllCategories()
             await this.getRandomProduct()
-            await this.getBlogPost()
+            await this.getBlogPost();
+            this.getAllBrands()
             this.networkError = false
             this.isLoadingComplete = true
           } catch (error: any) {
