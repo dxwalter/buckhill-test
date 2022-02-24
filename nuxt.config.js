@@ -18,9 +18,7 @@ export default {
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
-  css: [
-    '~/assets/app.css'
-  ],
+  css: ['~/assets/app.css'],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
@@ -33,7 +31,7 @@ export default {
     {
       src: '~/plugins/utils.client.ts',
     },
-    { src: '~/plugins/vuex-persist.client.js', ssr: false }
+    { src: '~/plugins/vuex-persist.client.js', ssr: false },
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -93,10 +91,14 @@ export default {
 
   toast: {
     position: 'top-right',
-    duration: 2000
+    duration: 2000,
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
-  build: {},
+  build: {
+    transpile: ['vue-debounce-decorator'],
+  },
+  storybook: {
+    // Options
+  },
 }
-

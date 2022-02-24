@@ -1,19 +1,20 @@
-import axios, { Method, AxiosResponse } from 'axios';
+import axios, { Method, AxiosResponse } from 'axios'
 
 const instance = axios.create()
 
 class Api {
-
-  private token: string = '';
-  private base: string = '';
+  private token: string = ''
+  private base: string = ''
   private store: any = undefined
 
-  __jsonRequest(method: Method, url: string, data = {}, params = {}, contentType = undefined) {
-
-    const onUploadProgress = (event: {
-      total: number,
-      loaded: number
-    }) => {
+  __jsonRequest(
+    method: Method,
+    url: string,
+    data = {},
+    params = {},
+    contentType = undefined
+  ) {
+    const onUploadProgress = (event: { total: number; loaded: number }) => {
       if (contentType !== undefined) {
         const percentCompleted = Math.round((event.loaded * 100) / event.total)
         this.store.dispatch('counters/saveImageProgress', percentCompleted)
@@ -55,7 +56,7 @@ class Api {
       if (res.data.success === 1 || res.data.success === undefined) {
         return Promise.resolve(res.data)
       }
-      
+
       return Promise.resolve(res.data)
     } catch (e: any) {
       if (e.response) {
@@ -75,21 +76,17 @@ class Api {
     }
   }
 
-  async __multiRequest(
-    url: Promise<AxiosResponse<any>>[]
-  ) {
+  async __multiRequest(url: Promise<AxiosResponse<any>>[]) {
     try {
+      const res = await axios.all(url)
 
-      const res = await axios.all(url);
-      
       const result: any = []
 
-      res.forEach(element => {
+      res.forEach((element) => {
         result.push(element.data.data)
-      });
+      })
 
       return Promise.resolve(result)
-
     } catch (e: any) {
       if (e.response) {
         if (e.response.status === 401) {
@@ -128,7 +125,7 @@ class Api {
   }
 
   async login(data: any) {
-    return  await this.__request('post', '/user/login', data)
+    return await this.__request('post', '/user/login', data)
   }
 
   async logout() {
@@ -140,7 +137,7 @@ class Api {
   }
 
   async resetPassword(data: any) {
-    return  await this.__request('post', '/user/reset-password-token', data)
+    return await this.__request('post', '/user/reset-password-token', data)
   }
 
   async getUser() {
@@ -149,44 +146,55 @@ class Api {
 
   // promotion
 
-  async getPromotion () {
-    return await this.__request('get', '/main/promotions?limit=1&desc=true&valid=true')
+  async getPromotion() {
+    return await this.__request(
+      'get',
+      '/main/promotions?limit=1&desc=true&valid=true'
+    )
   }
 
-  async getAllCategories () {
+  async getAllCategories() {
     return await this.__request('get', '/categories')
   }
 
-  async getAllBrands () {
+  async getAllBrands() {
     return await this.__request('get', '/brands')
   }
 
-  async getBlogPostList () {
+  async getBlogPostList() {
     return await this.__request('get', '/main/blog')
   }
 
   async getProductsFromMultiCategories(url: string[]) {
-    const requestOne: Promise<AxiosResponse<any>> = axios.get(`${this.base}/${url[0]}`)
-    const requestTwo: Promise<AxiosResponse<any>> = axios.get(`${this.base}/${url[1]}`)
+    const requestOne: Promise<AxiosResponse<any>> = axios.get(
+      `${this.base}/${url[0]}`
+    )
+    const requestTwo: Promise<AxiosResponse<any>> = axios.get(
+      `${this.base}/${url[1]}`
+    )
     return await this.__multiRequest([requestOne, requestTwo])
   }
 
+  async getProductById(id: string) {
+    return await this.__request('get', '/product/' + id)
+  }
 
   async getProductByCategory(id: string) {
     return await this.__request('get', '/products?category=' + id)
   }
 
-  async getImageFile (uuid: string) {
+  async getImageFile(uuid: string) {
     // return await this.__request('get', '/file/' + uuid)
     const url = `${this.base}/file/${uuid}`
     // let data;
     const response = await fetch(url)
     if (!response.ok) {
-      throw new Error('Could not get image. Kindly check your internet connection')
+      throw new Error(
+        'Could not get image. Kindly check your internet connection'
+      )
     }
     return response.blob()
   }
-
 }
 
 export default new Api()
