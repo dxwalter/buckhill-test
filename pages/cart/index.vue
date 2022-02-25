@@ -6,10 +6,17 @@
         <div class="">
           <!-- show page content -->
           <div>
-            <!-- product search field -->
-            <search-input />
-
             <div class="cart-details-container mt-4 mb-16">
+              <!-- breadcrumb -->
+              <div class="breadcrumb mb-8 mt-8">
+                <div class="breadcrumb-link mb-3">
+                  <NuxtLink to="/">Homepage</NuxtLink> /
+                  <NuxtLink to="#" class="active">Your cart</NuxtLink>
+                </div>
+                <div class="heading">Your Cart</div>
+              </div>
+
+              <!-- cart listing -->
               <div v-if="allCartItems.length">
                 <cart-item
                   v-for="cart in allCartItems"
@@ -20,7 +27,7 @@
                 <div class="mt-16">
                   <NuxtLink
                     class="btn-100 v-btn v-btn--is-elevated v-btn--has-bg theme--dark v-size--large green"
-                    to="/checkout"
+                    to="/checkout?tab=1"
                     >PROCEED TO CHECKOUT</NuxtLink
                   >
                 </div>
@@ -63,7 +70,7 @@ import Footer from '@/layouts/Footer.vue'
     Footer,
   },
 })
-export default class ProductListingByCategory extends Vue {
+export default class CartItemsListing extends Vue {
   isLoadingComplete: boolean = false
   networkError: boolean = false
   pageSetupErrorMessage: string = ''

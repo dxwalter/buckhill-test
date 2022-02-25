@@ -12,9 +12,11 @@
           :to="`/product/${product.uuid}`"
           class="product-name"
           :title="product.title"
-          >{{ product.title }}</NuxtLink
+          >{{ $capitalizeString(product.title) }}</NuxtLink
         >
-        <div class="product-brand-name">{{ product.brand.title }}</div>
+        <div class="product-brand-name">
+          {{ $capitalizeString(product.brand.title) }}
+        </div>
         <div class="product-price" :class="[showCartBtn ? 'bolden-price' : '']">
           {{ product.price }} Kn
         </div>

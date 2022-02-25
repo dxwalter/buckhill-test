@@ -37,11 +37,25 @@
           <div v-else>
             <!-- product search field -->
             <search-input />
-
+            <!-- breadcrumb -->
+            <div class="align-breadcrumb">
+              <div class="breadcrumb mb-8 mt-8">
+                <div class="heading mb-3">
+                  {{ $capitalizeString(categoryDetails.title) }}
+                </div>
+                <div class="breadcrumb-link">
+                  <NuxtLink to="/">Homepage</NuxtLink> /
+                  <NuxtLink to="#" class="active">{{
+                    $capitalizeString(categoryDetails.title)
+                  }}</NuxtLink>
+                </div>
+              </div>
+            </div>
             <div
               v-if="productList.length > 0"
               class="category-container mt-4 mb-16"
             >
+              <!-- side bar -->
               <div class="category-sidebar">
                 <v-expansion-panels focusable>
                   <v-expansion-panel>
@@ -90,6 +104,8 @@
               </div>
 
               <div class="category-product-listing">
+                <!-- breadcrumb -->
+
                 <product-item
                   v-for="product in productList"
                   :key="product.uuid"
@@ -129,7 +145,7 @@
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
 
-import { Product } from '../../types'
+import { Product, Category } from '../../types'
 
 import NavigationBar from '@/layouts/NavigationBar.vue'
 import Footer from '@/layouts/Footer.vue'
@@ -147,6 +163,7 @@ export default class ProductListingByCategory extends Vue {
   $api: any
 
   categoryId: string = ''
+  categoryDetails: Category | null = null
 
   productList: Product[] = []
 
@@ -158,9 +175,17 @@ export default class ProductListingByCategory extends Vue {
     return this.$store.getters['brands/getAllBrands']
   }
 
+  getCategoryDetails(): void {
+    this.categoryDetails = this.allCategories.filter((data: Category) => {
+      return data.uuid === this.categoryId
+    })[0]
+  }
+
   async getProductByCategory(): Promise<void> {
     this.isLoadingComplete = false
     this.networkError = false
+
+    this.getCategoryDetails()
 
     try {
       const getProduct = await this.$api.getProductByCategory(this.categoryId)
@@ -189,4 +214,8 @@ export default class ProductListingByCategory extends Vue {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+.align-breadcrumb {
+  padding-left: 240px;
+}
+</style>

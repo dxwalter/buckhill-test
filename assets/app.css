@@ -375,6 +375,16 @@ button:disabled {
   line-height: 1.625;
 }
 
+.add-ellipsis {
+  display: -webkit-box !important;
+  width: 200px;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.625;
+}
+
 .product-brand-name {
   font-size: 14px;
   margin-bottom: 4px;
@@ -717,4 +727,181 @@ button:disabled {
   font-size: 28px;
   font-weight: bold;
   margin-bottom: 16px;
+}
+
+.breadcrumb .heading {
+  font-size: 32px;
+  color: green;
+}
+
+.breadcrumb-link {
+  display: flex;
+}
+
+.breadcrumb-link a {
+  color: rgb(182, 182, 182) !important;
+  display: block;
+  text-decoration: none;
+  font-size: 18px;
+}
+
+.breadcrumb-link a.active {
+  margin-left: 8px;
+  color: black !important;
+}
+
+.breadcrumb-link a:nth-child(even) {
+  margin-left: 8px;
+  margin-right: 8px;
+}
+
+.breadcrumb-link a:nth-child(odd) {
+  margin-right: 8px;
+}
+
+.checkout-container {
+  width: 60%;
+  min-height: calc(100vh - 400px);
+  margin: 0 auto;
+}
+
+.checkout-tab-item {
+  display: flex;
+  cursor: pointer;
+  margin-right: 16px;
+}
+
+.checkout-tab-item:last-child {
+  margin-right: 0;
+}
+
+.checkout-tab-item.active .label {
+  background-color: green;
+}
+
+.checkout-tab-item .label {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: gray;
+  color: white;
+  font-size: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 4px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.checkout-tab-item.active .description {
+  color: black;
+}
+
+.checkout-tab-item .description {
+  align-self: center;
+  font-weight: 400;
+  font-size: 12px;
+  color: grey;
+  margin-right: 4px;
+}
+
+.checkout-tab-item .line {
+  width: 60px;
+  border: 0.5px solid grey;
+  height: 0;
+  align-self: center;
+  opacity: 0.5;
+}
+
+.checkout-item-container {
+  margin-top: 32px;
+}
+
+.checkout-container .tab-header {
+  font-size: 18px;
+  font-weight: 500;
+  margin-bottom: 32px;
+}
+
+.payment-tab-item {
+  padding: 20px;
+  width: 170px;
+  height: 170px;
+  display: flex !important;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  align-content: center;
+  position: relative;
+  cursor: pointer;
+}
+
+.payment-tab-item.active {
+  background-color: #eeeeee !important;
+}
+
+.payment-tab-item.active i {
+  opacity: 1;
+}
+
+.payment-tab-item i {
+  opacity: 0.4;
+}
+
+.payment-tab-item .type {
+  font-weight: bold;
+}
+
+.payment-type-header {
+  font-weight: bold;
+  color: black;
+}
+
+.review-section-header {
+  padding: 8px 16px;
+  background-color: #fafafa;
+}
+
+.review-section-header .header {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.review-section-header .switch-tab,
+.review-section-header .switch-tab a {
+  color: green;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.more-details {
+  padding: 8px 16px;
+  color: gray;
+}
+
+.more-details div {
+  margin-bottom: 4px;
+}
+
+.more-details div:first-child {
+  color: black;
+  font-weight: 400;
+}
+
+.summary-ordered-item {
+  display: flex;
+  border-bottom: 1px solid rgb(208, 208, 208);
+  padding: 8px 16px 12px 16px;
+}
+
+.summary-ordered-item .image-area {
+  width: 150px;
+  height: 150px;
+}
+
+.summary-ordered-item .image-area img {
+  object-fit: contain;
+  width: 100%;
+  height: 100%;
 }

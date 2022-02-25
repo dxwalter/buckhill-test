@@ -38,6 +38,22 @@
             <!-- product search field -->
             <search-input />
 
+            <!-- breadcrumb -->
+            <div class="align-breadcrumb">
+              <div class="breadcrumb mb-8 mt-8">
+                <div class="breadcrumb-link">
+                  <NuxtLink to="/">Homepage</NuxtLink> /
+                  <NuxtLink :to="`/category/${categoryDetails.uuid}`">{{
+                    $capitalizeString(categoryDetails.title)
+                  }}</NuxtLink>
+                  /
+                  <NuxtLink to="#" class="active add-ellipsis">{{
+                    $capitalizeString(productData.title)
+                  }}</NuxtLink>
+                </div>
+              </div>
+            </div>
+
             <div class="product-details-container mt-4 mb-16">
               <div>
                 <div class="d-flex mb-16">
@@ -52,8 +68,12 @@
 
                   <!-- product details -->
                   <div class="product-item-details">
-                    <div class="name">{{ productData.title }}</div>
-                    <div class="brand">{{ productData.brand.title }}</div>
+                    <div class="name">
+                      {{ $capitalizeString(productData.title) }}
+                    </div>
+                    <div class="brand">
+                      {{ $capitalizeString(productData.brand.title) }}
+                    </div>
                     <div class="price">{{ productData.price }}KN</div>
                     <div class="d-flex">
                       <!-- if item does not exist in cart, add item -->
@@ -107,7 +127,7 @@
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
 
-import { Product, getImageStatus, CartItem } from '../../types'
+import { Product, getImageStatus, CartItem, Category } from '../../types'
 
 import NavigationBar from '@/layouts/NavigationBar.vue'
 import Footer from '@/layouts/Footer.vue'
@@ -159,6 +179,9 @@ export default class ProductListingByCategory extends Vue {
     },
   }
 
+  categoryDetails: Category | null = null
+  categoryId: string = ''
+
   reduceQuantity(): void {
     this.quantity = Number(this.quantity) === 1 ? 1 : Number(this.quantity) - 1
   }
@@ -171,6 +194,16 @@ export default class ProductListingByCategory extends Vue {
     )
 
     this.itemExistStatus = item.length
+  }
+
+  get allCategories() {
+    return this.$store.getters['categories/getAllCategories']
+  }
+
+  getCategoryDetails(): void {
+    this.categoryDetails = this.allCategories.filter((data: Category) => {
+      return data.uuid === this.categoryId
+    })[0]
   }
 
   addToCart(): void {
@@ -217,6 +250,8 @@ export default class ProductListingByCategory extends Vue {
       const getProduct = await this.$api.getProductById(this.productId)
 
       this.productData = getProduct.data
+      this.categoryId = this.productData.category_uuid
+      this.getCategoryDetails()
 
       this.getImageFile(this.productData.metadata.image)
       this.itemExistsInCart()

@@ -5,7 +5,7 @@
       class="products-category-header"
       >{{ categoryName }}</NuxtLink
     >
-    <VueSlickCarousel v-bind="settings">
+    <VueSlickCarousel v-bind="settings" class="mt-4">
       <product-item
         v-for="product in allProduct"
         :key="product.uuid"
