@@ -67,7 +67,7 @@ class Api {
             'account=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;'
           window.document.cookie =
             'kyc=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;'
-          window.location.href = '/logout'
+
           return false
         }
         return Promise.reject(e.response.data)
@@ -96,7 +96,6 @@ class Api {
             'account=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;'
           window.document.cookie =
             'kyc=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;'
-          window.location.href = '/logout'
           return false
         }
         return Promise.reject(e.response.data)
@@ -194,6 +193,18 @@ class Api {
       )
     }
     return response.blob()
+  }
+
+  async createPayment(data: any) {
+    return await this.__request('post', '/payment/create', data)
+  }
+
+  async logoutUser() {
+    return await this.__request('get', '/user/logout')
+  }
+
+  async getAllPayments() {
+    return await this.__request('get', '/payments')
   }
 }
 

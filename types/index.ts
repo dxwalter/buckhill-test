@@ -1,13 +1,13 @@
 export interface RegisterUser {
-    is_marketing: boolean
-    last_name: string
-    address: string
-    avatar: string
-    password_confirmation: string
-    password: string
-    first_name: string
-    phone_number: string
-    email: string
+  is_marketing: boolean
+  last_name: string
+  address: string
+  avatar: string
+  password_confirmation: string
+  password: string
+  first_name: string
+  phone_number: string
+  email: string
 }
 export interface LoginUser {
   email: string
@@ -15,32 +15,32 @@ export interface LoginUser {
 }
 
 export type UserData = {
-    uuid: string
-    first_name: string,
-    last_name: string,
-    email: string,
-    avatar: string | null,
-    address: string | number,
-    phone_number: string | number,
-    is_marketing: boolean,
-    updated_at: string,
-    created_at: string,
-    token?: string
+  uuid: string
+  first_name: string
+  last_name: string
+  email: string
+  avatar: string | null
+  address: string | number
+  phone_number: string | number
+  is_marketing: boolean
+  updated_at: string
+  created_at: string
+  token?: string
 }
-export interface AuthenticateUserResponse  {
-  success: 1,
-  data: UserData,
-  error: null,
-  errors: any[],
+export interface AuthenticateUserResponse {
+  success: 1
+  data: UserData
+  error: null
+  errors: any[]
   extra: any[]
 }
-export interface LoginUserResponse  {
-  success: 1,
+export interface LoginUserResponse {
+  success: 1
   data: {
     token: string
-  },
-  error: null,
-  errors: any[],
+  }
+  error: null
+  errors: any[]
   extra: any[]
 }
 
@@ -71,8 +71,8 @@ export interface BlogPost {
   slug: string
   content: string
   metadata: {
-      image: string
-      author: string
+    image: string
+    author: string
   }
   created_at: string
   updated_at: string
@@ -102,9 +102,9 @@ export interface Product {
     brand: string
     image: string
   }
-  created_at: string,
-  updated_at: string,
-  deleted_at: null,
+  created_at: string
+  updated_at: string
+  deleted_at: null
   category: Category
   brand: Brand
 }
@@ -125,4 +125,16 @@ export interface CartItem {
 export interface SliderProduct {
   categoryName: string
   products: Product[]
+}
+
+export interface ShippingAddress {
+  firstName: string
+  lastName: string
+  addressLineOne: string
+  addressLineTwo: string
+  city?: string
+  state?: string
+  zipCode: string
+  country: string
+  useForPayment: boolean
 }
